@@ -115,6 +115,7 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     if (self = [super initWithNibName:nil bundle:nil])
     {
         _collectionView = collectionView;
+        [self configureCollectionView:collectionView];
         self.scrollViewProxy = collectionView;
         [self slk_commonInit];
     }
