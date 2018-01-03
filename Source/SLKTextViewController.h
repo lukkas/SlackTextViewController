@@ -145,7 +145,7 @@ NS_CLASS_AVAILABLE_IOS(7_0) @interface SLKTextViewController : UIViewController 
  @return An initialized SLKTextViewController object or nil if the object could not be created.
  */
 - (instancetype __nullable)initWithCollectionViewLayout:(UICollectionViewLayout *)layout;
-
+- (instancetype __nullable)initWithCollectionView:(UICollectionView *)collectionView;
 /**
  Initializes a text view controller to manage an arbitraty scroll view. The caller is responsible for configuration of the scroll view, including wiring the delegate.
  

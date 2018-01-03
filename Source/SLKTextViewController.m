@@ -107,6 +107,20 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     return self;
 }
 
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView
+{
+    NSAssert([self class] != [SLKTextViewController class], @"Oops! You must subclass SLKTextViewController.");
+    NSAssert([collectionView isKindOfClass:[UICollectionView class]], @"Oops! You must pass a valid UICollectionViewLayout object.");
+    
+    if (self = [super initWithNibName:nil bundle:nil])
+    {
+        _collectionView = collectionView;
+        self.scrollViewProxy = collectionView;
+        [self slk_commonInit];
+    }
+    return self;
+}
+
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView
 {
     NSAssert([self class] != [SLKTextViewController class], @"Oops! You must subclass SLKTextViewController.");
@@ -276,13 +290,17 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 {
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-        _collectionView.backgroundColor = [UIColor whiteColor];
-        _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-        _collectionView.scrollsToTop = YES;
-        _collectionView.dataSource = self;
-        _collectionView.delegate = self;
+        [self configureCollectionView:_collectionView];
     }
     return _collectionView;
+}
+
+- (void)configureCollectionView:(UICollectionView *)collectionView {
+    collectionView.backgroundColor = [UIColor whiteColor];
+    collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    collectionView.scrollsToTop = YES;
+    collectionView.dataSource = self;
+    collectionView.delegate = self;
 }
 
 - (UITableView *)autoCompletionView
