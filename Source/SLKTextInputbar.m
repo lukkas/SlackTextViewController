@@ -196,13 +196,13 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
         _leftButtonsStackView.axis = UILayoutConstraintAxisHorizontal;
         _leftButtonsStackView.distribution = UIStackViewDistributionFillEqually;
         _leftButtonsStackView.alignment = UIStackViewAlignmentFill;
-        _leftButtonsStackView.spacing = self.leftButtonsSpacing;
+        _leftButtonsStackView.spacing = 0.0f;
     }
     return _leftButtonsStackView;
 }
 
-- (CGFloat)leftButtonsSpacing {
-    return 8.0f;
+- (CGSize)leftButtonsSize {
+    return CGSizeMake(34.f, 34.f);
 }
 
 - (UIButton *)rightButton
@@ -769,18 +769,13 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 }
 
 - (CGSize)calculateButtonsSize {
-    CGFloat maximumButtonWidth = 0.0;
-    CGFloat maximumButtonHeight = 0.0;
-    for (UIButton *button in self.leftButtons) {
-        CGSize buttonSize = [button imageForState:button.state].size;
-        maximumButtonWidth = MAX(buttonSize.width, maximumButtonWidth);
-        maximumButtonHeight = MAX(buttonSize.height, maximumButtonHeight);
-    }
-    if (maximumButtonWidth == 0.0) {
+    CGFloat buttonWidth = self.leftButtonsSize.width;
+    CGFloat buttonHeight = self.leftButtonsSize.height;
+    if (self.leftButtons.count == 0) {
         return CGSizeZero;
     }
-    CGFloat width = self.leftButtons.count * maximumButtonWidth + (self.leftButtons.count - 1) * self.leftButtonsSpacing;
-    return CGSizeMake(width, maximumButtonHeight);
+    CGFloat width = self.leftButtons.count * buttonWidth;
+    return CGSizeMake(width, buttonHeight);
 }
 
 
