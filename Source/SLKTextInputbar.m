@@ -141,6 +141,10 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
     return _leftButtonsStackView.arrangedSubviews.count;
 }
 
+- (NSArray<UIButton *> *)leftButtons {
+    return self.leftButtonsStackView.arrangedSubviews;
+}
+
 - (SLKTextView *)textView
 {
     if (!_textView) {
