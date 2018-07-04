@@ -191,7 +191,7 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 
 - (UIStackView *)leftButtonsStackView {
     if (!_leftButtonsStackView) {
-        _leftButtonsStackView = [[UIStackView alloc] init];
+        _leftButtonsStackView = [[UIStackView alloc] initWithArrangedSubviews:@[[self createNewLeftButton]]];
         _leftButtonsStackView.translatesAutoresizingMaskIntoConstraints = NO;
         _leftButtonsStackView.axis = UILayoutConstraintAxisHorizontal;
         _leftButtonsStackView.distribution = UIStackViewDistributionFill;
@@ -431,13 +431,13 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 - (void)addNewButtonToLeftButtonsStack {
     UIButton *newButton = [self createNewLeftButton];
     [self.leftButtonsStackView addArrangedSubview:newButton];
-    [self slk_registerTo:newButton.imageView forSelector:@selector(image)];
 }
 
 - (UIButton *)createNewLeftButton {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     button.translatesAutoresizingMaskIntoConstraints = NO;
     button.titleLabel.font = [UIFont systemFontOfSize:15.0];
+    [self slk_registerTo:button.imageView forSelector:@selector(image)];
     return button;
 }
 
@@ -800,7 +800,7 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
             [[NSNotificationCenter defaultCenter] postNotificationName:SLKTextInputbarDidMoveNotification object:self userInfo:@{@"origin": [NSValue valueWithCGPoint:self.previousOrigin]}];
         }
     }
-    else if ([self.leftButtons containsObject:object] && [keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
+    else if ([self.leftButtonsImageViews containsObject:object] && [keyPath isEqualToString:NSStringFromSelector(@selector(image))]) {
         
         UIImage *newImage = change[NSKeyValueChangeNewKey];
         UIImage *oldImage = change[NSKeyValueChangeOldKey];
@@ -816,6 +816,14 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
     else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
+}
+
+- (NSArray *)leftButtonsImageViews {
+    NSMutableArray *imgViews = [[NSMutableArray alloc] init];
+    for (UIButton *imgView in self.leftButtons) {
+        [imgViews addObject:imgView];
+    }
+    return [[NSArray alloc] initWithArray:imgViews];
 }
 
 
