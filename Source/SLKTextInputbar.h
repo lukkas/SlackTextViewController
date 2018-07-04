@@ -43,10 +43,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, strong) SLKInputAccessoryView *inputAccessoryView;
 
 /** The left action button action. */
-@property (nonatomic, strong) UIButton *leftButton;
+@property (nonatomic, strong, readonly) UIStackView *leftButtonsStackView;
+@property (nonatomic, strong, readonly) NSArray<UIButton *> *leftButtons;
+@property (nonatomic, assign, readwrite) NSInteger numberOfLeftButtons;
 
 /** The right action button action. */
-@property (nonatomic, strong) UIButton *rightButton;
+@property (nonatomic, strong, readonly) UIButton *rightButton;
 
 /** YES if the right button should be hidden animatedly in case the text view has no text in it. Default is YES. */
 @property (nonatomic, readwrite) BOOL autoHideRightButton;

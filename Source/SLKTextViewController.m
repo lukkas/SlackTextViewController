@@ -107,6 +107,21 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     return self;
 }
 
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView
+{
+    NSAssert([self class] != [SLKTextViewController class], @"Oops! You must subclass SLKTextViewController.");
+    NSAssert([collectionView isKindOfClass:[UICollectionView class]], @"Oops! You must pass a valid UICollectionViewLayout object.");
+    
+    if (self = [super initWithNibName:nil bundle:nil])
+    {
+        _collectionView = collectionView;
+        [self configureCollectionView:collectionView];
+        self.scrollViewProxy = collectionView;
+        [self slk_commonInit];
+    }
+    return self;
+}
+
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView
 {
     NSAssert([self class] != [SLKTextViewController class], @"Oops! You must subclass SLKTextViewController.");
@@ -276,13 +291,17 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
 {
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
-        _collectionView.backgroundColor = [UIColor whiteColor];
-        _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-        _collectionView.scrollsToTop = YES;
-        _collectionView.dataSource = self;
-        _collectionView.delegate = self;
+        [self configureCollectionView:_collectionView];
     }
     return _collectionView;
+}
+
+- (void)configureCollectionView:(UICollectionView *)collectionView {
+    collectionView.backgroundColor = [UIColor whiteColor];
+    collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    collectionView.scrollsToTop = YES;
+    collectionView.dataSource = self;
+    collectionView.delegate = self;
 }
 
 - (UITableView *)autoCompletionView
@@ -318,7 +337,6 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
         _textInputbar = [[SLKTextInputbar alloc] initWithTextViewClass:self.textViewClass];
         _textInputbar.translatesAutoresizingMaskIntoConstraints = NO;
         
-        [_textInputbar.leftButton addTarget:self action:@selector(didPressLeftButton:) forControlEvents:UIControlEventTouchUpInside];
         [_textInputbar.rightButton addTarget:self action:@selector(didPressRightButton:) forControlEvents:UIControlEventTouchUpInside];
         [_textInputbar.editorLeftButton addTarget:self action:@selector(didCancelTextEditing:) forControlEvents:UIControlEventTouchUpInside];
         [_textInputbar.editorRightButton addTarget:self action:@selector(didCommitTextEditing:) forControlEvents:UIControlEventTouchUpInside];
@@ -370,9 +388,8 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     return _textInputbar.textView;
 }
 
-- (UIButton *)leftButton
-{
-    return _textInputbar.leftButton;
+- (NSArray<UIButton *> *)leftButtons {
+    return _textInputbar.leftButtons;
 }
 
 - (UIButton *)rightButton
@@ -756,11 +773,6 @@ CGFloat const SLKAutoCompletionViewDefaultHeight = 140.0;
     }
     
     return NO;
-}
-
-- (void)didPressLeftButton:(id)sender
-{
-    // No implementation here. Meant to be overriden in subclass.
 }
 
 - (void)didPressRightButton:(id)sender

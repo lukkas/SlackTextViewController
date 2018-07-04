@@ -119,7 +119,7 @@ NS_CLASS_AVAILABLE_IOS(7_0) @interface SLKTextViewController : UIViewController 
 
 /** Convenience accessors (accessed through the text input bar) */
 @property (nonatomic, readonly) SLKTextView *textView;
-@property (nonatomic, readonly) UIButton *leftButton;
+@property (nonatomic, readonly) NSArray<UIButton *> *leftButtons;
 @property (nonatomic, readonly) UIButton *rightButton;
 
 
@@ -145,7 +145,7 @@ NS_CLASS_AVAILABLE_IOS(7_0) @interface SLKTextViewController : UIViewController 
  @return An initialized SLKTextViewController object or nil if the object could not be created.
  */
 - (instancetype __nullable)initWithCollectionViewLayout:(UICollectionViewLayout *)layout;
-
+- (instancetype __nullable)initWithCollectionView:(UICollectionView *)collectionView;
 /**
  Initializes a text view controller to manage an arbitraty scroll view. The caller is responsible for configuration of the scroll view, including wiring the delegate.
  
@@ -263,15 +263,6 @@ NS_CLASS_AVAILABLE_IOS(7_0) @interface SLKTextViewController : UIViewController 
  You MUST call super at some point in your implementation.
  */
 - (void)textSelectionDidChange NS_REQUIRES_SUPER;
-
-/**
- Notifies the view controller when the left button's action has been triggered, manually.
- You can override this method to perform additional tasks associated with the left button.
- You don't need call super since this method doesn't do anything.
- 
- @param sender The object calling this method.
- */
-- (void)didPressLeftButton:(id _Nullable)sender;
 
 /**
  Notifies the view controller when the right button's action has been triggered, manually or by using the keyboard return key.
