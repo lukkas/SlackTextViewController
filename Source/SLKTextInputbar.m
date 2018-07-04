@@ -191,7 +191,7 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 
 - (UIStackView *)leftButtonsStackView {
     if (!_leftButtonsStackView) {
-        _leftButtonsStackView = [[UIStackView alloc] initWithArrangedSubviews:@[[self createNewLeftButton]]];
+        _leftButtonsStackView = [[UIStackView alloc] init];
         _leftButtonsStackView.translatesAutoresizingMaskIntoConstraints = NO;
         _leftButtonsStackView.axis = UILayoutConstraintAxisHorizontal;
         _leftButtonsStackView.distribution = UIStackViewDistributionFill;
@@ -431,13 +431,13 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 - (void)addNewButtonToLeftButtonsStack {
     UIButton *newButton = [self createNewLeftButton];
     [self.leftButtonsStackView addArrangedSubview:newButton];
+    [self slk_registerTo:newButton.imageView forSelector:@selector(image)];
 }
 
 - (UIButton *)createNewLeftButton {
     UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
     button.translatesAutoresizingMaskIntoConstraints = NO;
     button.titleLabel.font = [UIFont systemFontOfSize:15.0];
-    [self slk_registerTo:button.imageView forSelector:@selector(image)];
     return button;
 }
 
