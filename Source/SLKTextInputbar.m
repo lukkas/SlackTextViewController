@@ -19,7 +19,7 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 
 @interface SLKTextInputbar ()
 
-@property (nonatomic, strong) UIStackView *leftButtonsStackView;
+@property (nonatomic, strong, readwrite) UIStackView *leftButtonsStackView;
 @property (nonatomic, strong, readwrite) UIButton *rightButton;
 @property (nonatomic, strong, readwrite) NSArray<UIButton *> *leftButtons;
 

@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, strong) SLKInputAccessoryView *inputAccessoryView;
 
 /** The left action button action. */
+@property (nonatomic, strong, readonly) UIStackView *leftButtonsStackView;
 @property (nonatomic, strong, readonly) NSArray<UIButton *> *leftButtons;
 @property (nonatomic, assign, readwrite) NSInteger numberOfLeftButtons;
 
@@ -146,13 +147,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** The color used for character counter label when it has exceeded the limit. Default is redColor. */
 @property (nonatomic, strong, readwrite) UIColor *charCountLabelWarningColor;
-
-#pragma mark - Buttons
-///------------------------------------------------
-/// @name Text Buttons
-///------------------------------------------------
-
-- (void)setNumberOfLeftButtons:(NSInteger)number;
 
 @end
 
