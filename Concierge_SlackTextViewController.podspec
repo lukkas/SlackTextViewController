@@ -1,4 +1,4 @@
-@version = "1.9.13"
+@version = "1.9.14"
 
 Pod::Spec.new do |s|
   s.name            = "Concierge_SlackTextViewController"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source          = { :git => "https://github.com/lukkas/SlackTextViewController", :tag => "v#{s.version}" }
   s.module_name     = 'SlackTextViewController'
 
-  s.platform        = :ios, "7.0"
+  s.platform        = :ios, "9.0"
   s.requires_arc    = true
 
   s.header_mappings_dir = 'Source'
