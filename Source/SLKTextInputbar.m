@@ -820,8 +820,8 @@ NSString * const SLKTextInputbarDidMoveNotification =   @"SLKTextInputbarDidMove
 
 - (NSArray *)leftButtonsImageViews {
     NSMutableArray *imgViews = [[NSMutableArray alloc] init];
-    for (UIButton *imgView in self.leftButtons) {
-        [imgViews addObject:imgView];
+    for (UIButton *button in self.leftButtons) {
+        [imgViews addObject:button.imageView];
     }
     return [[NSArray alloc] initWithArray:imgViews];
 }
